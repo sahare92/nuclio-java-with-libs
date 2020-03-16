@@ -1,0 +1,26 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '2.0.2'
+    id 'java'
+}
+
+group 'taliguaz'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly 'io.nuclio:nuclio-sdk-java:1.1.0'
+//    implementation 'org.apache.kafka:kafka-clients:2.3.1'
+//    implementation 'net.openhft:zero-allocation-hashing:0.9'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+shadowJar {
+    baseName = 'user-handler'
+    classifier = null  // Don't append "all" to jar name
+}
+task userHandler(dependsOn: shadowJar)
